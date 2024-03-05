@@ -59,6 +59,11 @@ void tree(char *path, int dashes, int spaces, int level)
 
         struct stat st;
         int r = lstat(newppath, &st); // lstat to avoid following symlinks
+        if (r == -1)
+        {
+            perror("lstat");
+            exit(1);
+        }
         if (S_ISLNK(st.st_mode))
         {
             printf("%s%s%s -> %lld", CYAN, direc_prt->d_name, RESET, st.st_size);
